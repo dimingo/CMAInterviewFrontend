@@ -2,6 +2,10 @@
 
 ```
 # Create .env file if it does not exist in the root of the project
+
+# clone Project 
+git clone https://github.com/dimingo/CMAInterviewFrontend.git
+
 # set the API url to
 VITE_API_URL = "http://localhost:8000/api"
 
@@ -10,9 +14,6 @@ VITE_API_URL = "http://localhost:8000/api"
 ## Project setup
 
 ```
-# clone Project 
-git clone https://github.com/dimingo/CMAInterviewFrontend.git
-
 # using your prefered package manager run the steps below
 
 # yarn
