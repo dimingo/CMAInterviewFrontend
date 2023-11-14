@@ -10,6 +10,11 @@ VITE_API_URL = "http://localhost:8000/api"
 ## Project setup
 
 ```
+# clone Project 
+git clone https://github.com/dimingo/CMAInterviewFrontend.git
+
+# using your prefered package manager run the steps below
+
 # yarn
 yarn
 
