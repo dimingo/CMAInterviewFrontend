@@ -1,11 +1,9 @@
 <script setup>
   import useProductsStore from '@/store/products';
   import {computed, nextTick, onMounted, reactive, ref, watch} from 'vue';
-
   import useAlertStore from '@/store/alert'
 
   const AlertStore = useAlertStore();
-
   const formTitle = computed(() => editedIndex.value === -1 ? 'New Product' : 'Edit Product');
   const headers = [
     {
@@ -78,7 +76,6 @@
   // functions
   function editItem(item) {
     editedIndex.value = products.value.indexOf(item);
-    // change below
     editedItem.id = item.id;
     editedItem.name = item.name;
     editedItem.description = item.description;

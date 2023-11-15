@@ -11,8 +11,6 @@ const vuetify = createVuetify({
   components,
   directives,
 })
-
-
 global.ResizeObserver = require('resize-observer-polyfill')
 
 describe('Product Store', () => {
@@ -25,7 +23,7 @@ describe('Product Store', () => {
     expect(store.products).toStrictEqual([])
 
   })
-  // test if the component renders correctly
+
   test('renders correctly', () => {
     const wrapper = mount(Products, {
       props: {},
@@ -38,6 +36,7 @@ describe('Product Store', () => {
     });
     expect(wrapper.exists()).toBe(true);
   });
+
   test('displays message', () => {
     const wrapper = mount(Products, {
       props: {},
