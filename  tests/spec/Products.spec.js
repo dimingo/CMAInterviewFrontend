@@ -26,7 +26,6 @@ describe('Product Store', () => {
 
   })
   // test if the component renders correctly
-  
   test('renders correctly', () => {
     const wrapper = mount(Products, {
       props: {},
