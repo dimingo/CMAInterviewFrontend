@@ -2,6 +2,10 @@
   import useProductsStore from '@/store/products';
   import {computed, nextTick, onMounted, reactive, ref, watch} from 'vue';
 
+  import useAlertStore from '@/store/alert'
+
+  const AlertStore = useAlertStore();
+
   const formTitle = computed(() => editedIndex.value === -1 ? 'New Product' : 'Edit Product');
   const headers = [
     {
@@ -60,7 +64,14 @@
     }
   });
   const getProducts = async () => {
-    await store.getProducts();
+    await store.getProducts().then(
+      (response) => {
+        if (response.status === 200) {
+          AlertStore.showAlert('success', "Records Retrieved");
+        } else {
+          AlertStore.showAlert("error", "Error Retrieving Records");
+        }
+      });
   }
   onMounted(getProducts);
 
@@ -83,9 +94,17 @@
 
   function deleteItemConfirm() {
     products.value.splice(editedIndex.value, 1);
-    store.deleteProduct(editedIndex.value)
+    store.deleteProduct(editedIndex.value).then(
+      (response) => {
+        if (response.status === 200) {
+          AlertStore.showAlert('success', "Record Deleted Successfully");
+        } else {
+          AlertStore.showAlert("error", "Error Deleting Records");
+        }
+      });
     closeDelete();
   }
+
   function close() {
     dialog.value = false;
     nextTick(() => {
@@ -107,16 +126,31 @@
   const save = async () => {
     const {valid} = await form.value.validate();
     if (valid) {
-      alert('Form is valid');
       if (editedIndex.value === -1) {
-        store.storeProduct(editedItem);
+        store.storeProduct(editedItem).then(
+          (response) => {
+            if (response.status === 201) {
+              AlertStore.showAlert('success', "Records Saved Successfully");
+              getProducts()
+            } else {
+              AlertStore.showAlert("error", "Error Saving Record");
+            }
+          });
         close();
       } else {
-        store.updateProduct(editedItem);
+        store.updateProduct(editedItem).then(
+          (response) => {
+            if (response.status === 200) {
+              AlertStore.showAlert('success', "Record Updated Successfully");
+              store.getProducts()
+            } else {
+              AlertStore.showAlert("error", "Error Updating Record");
+            }
+          });
         close();
       }
     } else {
-      alert('Please correct the errors in the form.');
+      AlertStore.showAlert("warning", 'Please correct the errors in the form.');
     }
   };
 

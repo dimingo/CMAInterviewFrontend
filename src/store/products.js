@@ -1,9 +1,7 @@
 /* eslint-disable */
 import {defineStore} from 'pinia';
 import axios from "axios";
-import useAlertStore from '@/store/alert'
 
-const store = useAlertStore();
 
 export default defineStore('products', {
 
@@ -15,13 +13,13 @@ export default defineStore('products', {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/products`);
         if (response.status === 200) {
           this.products = response.data.data.products;
-          store.showAlert('success', 'Records Retrieved Successfully');
+          return response;
         } else {
-          store.showAlert('error', 'Records Not Retrieved');
+          throw new Error('Records Not Retrieved');
         }
       } catch (error) {
         console.log(error);
-        store.showAlert('error', 'Error Retrieving Records');
+        throw error;
       }
     },
     async storeProduct(product) {
@@ -32,13 +30,13 @@ export default defineStore('products', {
           }
         });
         if (response.status === 201) {
-          store.showAlert('success', 'Records Stored Successfully');
+          return response;
         } else {
-          store.showAlert('error', 'Records Not Stored');
+          throw new Error('Records Not Stored');
         }
       } catch (error) {
         console.log(error);
-        store.showAlert('error', 'Error Storing Records');
+        throw error;
       }
     },
     async showProduct(id) {
@@ -46,17 +44,16 @@ export default defineStore('products', {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/products/${id}`);
         if (response.status === 200) {
           this.product = response.data.product;
-          store.showAlert('success', 'Records Retrieved Successfully');
+          return response;
         } else {
-          store.showAlert('error', 'Records Not Retrieved');
+          throw new Error('Records Not Retrieved');
         }
       } catch (error) {
         console.log(error);
-        store.showAlert('error', 'Error Retrieving Record');
+        throw error;
       }
     },
     async updateProduct(product) {
-
       try {
         const response = await axios.put(`${import.meta.env.VITE_API_URL}/products/${product.id}`, product, {
           headers: {
@@ -65,27 +62,28 @@ export default defineStore('products', {
         });
 
         if (response.status === 200) {
-          store.showAlert('success', 'Records Updated Successfully');
+          await this.getProducts();
+          return response;
         } else {
-          store.showAlert('error', 'Error Updating Record');
+          throw new Error('Error Updating Record');
         }
       } catch (error) {
         console.log(error);
-        store.showAlert('error', 'Error Updating Record');
+        throw error;
       }
     },
     async deleteProduct(id) {
       try {
         const response = await axios.delete(`${import.meta.env.VITE_API_URL}/products/${id}`);
         if (response.status === 200) {
-          store.showAlert('success', 'Record Deleted Successfully');
+          return response;
         } else {
-          store.showAlert('error', 'Error Deleting Record');
+          throw new Error('Error Deleting Record');
         }
       } catch (error) {
         console.log(error);
-        store.showAlert('error', 'Error Deleting Record');
+        throw error;
       }
-    },
+    }
   },
 });
