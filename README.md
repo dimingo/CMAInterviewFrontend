@@ -76,6 +76,13 @@ pnpm lint
 bun run lint
 ```
 
+### Running Tests
+
+```
+# npm
+ npm run test
+```
+
 ### Customize configuration
 
 See [Configuration Reference](https://vitejs.dev/config/).

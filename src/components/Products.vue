@@ -131,7 +131,7 @@
           (response) => {
             if (response.status === 201) {
               AlertStore.showAlert('success', "Records Saved Successfully");
-              getProducts()
+              store.getProducts()
             } else {
               AlertStore.showAlert("error", "Error Saving Record");
             }
@@ -235,6 +235,7 @@
                       color="primary"
                       density="compact"
                       label="Product Price"
+                      placeholder="Example 100.00"
                       type="number"
                       variant="outlined"
                     ></v-text-field>
